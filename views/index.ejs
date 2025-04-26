@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventario de Productos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Sistema de Inventario</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container mt-3">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">          
+          <h4>Lista de Productos</h4>
+          <a href="./create" class="btn btn-sm btn-primary">Registrar Nuevo</a>
+        </div>
+        <div class="card-body">
+          <table class="table table-sm table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Proveedor</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% productos.forEach(producto => { %>
+               <tr>
+                <td><%= producto.id %></td>
+                <td><%= producto.nombre %></td>
+                <td>
+                  <% if(producto.categoria === 'A') { %> 
+                    <span class="badge bg-success">A</span>
+                  <% } else if(producto.categoria === 'B') { %> 
+                    <span class="badge bg-primary">B</span>
+                  <% } else { %> 
+                    <span class="badge bg-secondary">C</span>
+                  <% } %>
+                </td>
+                <td><%= producto.proveedor %></td>
+                <td>$<%= producto.precio.toFixed(2) %></td>
+                <td><%= producto.stock %></td>
+                <td>
+                  <a href="./edit/<%= producto.id %>" class="btn btn-sm btn-info text-white">Editar</a>
+                  <a href="./delete/<%= producto.id %>" data-producto="<%= producto.nombre %>" class="btn btn-sm btn-danger delete">Eliminar</a>
+                </td>
+               </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div> <!--./card-body-->
+      </div> <!--./card-->
+
+    </section>
+  </main>
+
+
+
+  <script>
+    const enlaces = document.querySelectorAll(".delete");
+
+    enlaces.forEach(btn => {
+      btn.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const nombreProducto = event.target.getAttribute('data-producto');
+        const ruta = event.target.getAttribute('href');
+        if (confirm(`¿Estás seguro de eliminar el producto "${nombreProducto}"?`)){
+          window.location.href = ruta;
+        }
+      });
+    });
+  </script>
+  
+
+</body>
+
+</html>
