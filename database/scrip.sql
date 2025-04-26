@@ -1,22 +1,20 @@
-CREATE DATABASE inventario;
-GO
+
+CREATE DATABASE IF NOT EXISTS inventario;
 
 USE inventario;
-GO
 
-CREATE TABLE productos (
-    id INT IDENTITY(1,1) PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS productos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    categoria VARCHAR(1) NOT NULL, -- 'A', 'B', 'C' (para categorías de productos)
+    categoria VARCHAR(1) NOT NULL,
     proveedor VARCHAR(100) NOT NULL,
     precio DECIMAL(7,2) NOT NULL,
     stock INT NOT NULL
 );
-GO
+
 
 INSERT INTO productos (nombre, categoria, proveedor, precio, stock) VALUES 
 ('Teclado Mecánico', 'A', 'TechSupply', 350.50, 25),
 ('Monitor LED 24"', 'B', 'DisplayTech', 1200.75, 15);
-GO
 
 SELECT * FROM productos;
